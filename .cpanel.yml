@@ -1,0 +1,6 @@
+---
+deployment:
+  tasks:
+    - export DEPLOYPATH=/home/ecologra/ecologradapp/app
+    - /bin/rm -rf ${DEPLOYPATH}/*
+    - /bin/cp -r /home/ecologra/repositories/ecolobot/* $DEPLOYPATH
