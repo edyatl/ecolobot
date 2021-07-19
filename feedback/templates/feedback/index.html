@@ -1,0 +1,95 @@
+{% extends 'base.html' %}
+{% from "feedback/_pagination_macro.html" import pagination %}
+{% from "feedback/_mailto_macro.html" import mailto %}
+{% from "feedback/_phoneto_macro.html" import phoneto %}
+
+{% block title -%}
+    Feedback module
+{%- endblock %}
+
+{% block content_title -%}
+    Feedback messages
+{%- endblock content_title %}
+
+{% block content %}
+            <div class="accordion" id="accordionTable">
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th>&nbsp;</th>
+                    <th>id</th>
+                    <th>date</th>
+                    <th>name</th>
+                    <th>mail</th>
+                    <th>phone</th>
+                    <th>message</th>
+                </tr>
+                </thead>
+                <tbody>
+            {% for msg in pgs.items %}
+                {% if msg.id == active %}
+                <tr id="m{{ msg.id }}" class="clickable collapse-row{% if msg.unread %} fw-bolder{% endif %}" data-bs-toggle="collapse" data-bs-target="#d{{ msg.id }}" aria-expanded="true" aria-controls="d{{ msg.id }}">
+                {% else %}
+                <tr id="m{{ msg.id }}" class="clickable collapse-row collapsed{% if msg.unread %} fw-bolder{% endif %}" data-bs-toggle="collapse" data-bs-target="#d{{ msg.id }}" aria-expanded="false" aria-controls="d{{ msg.id }}">
+                {% endif %}
+                    <td class="list-buttons-column">
+                        <a class="icon" href="/admin/messages/edit/?id={{ msg.id }}&amp;url=%2Fadmin%2Fmessages%2F" title="Edit Record">
+                              <span class="fa fa-pencil glyphicon glyphicon-pencil"></span>
+                        </a>
+                    </td>
+                    <td>{{ msg.id }}</td>
+                    <td>{{ msg.date }}</td>
+                    <td>{{ msg.name }}</td>
+                    <td>{{ mailto(decrypt_field(msg.mail, config['MESSAGES_MAIL_KEY'])) }}</td>
+                    <td>{{ phoneto(decrypt_field(msg.phone, config['MESSAGES_PHONE_KEY'])) }}</td>
+                    <td>{{ msg.body }}</td>
+                </tr>
+                <tr>
+                    <td colspan="7">
+                        <div id="d{{ msg.id }}" class="accordion-collapse collapse{% if msg.id == active %} show{% endif %}" aria-labelledby="m{{ msg.id }}" data-bs-parent="#accordionTable">
+                            <div class="accordion-body">
+                                <strong>History:</strong> 
+                                {% if msg.history %}
+                                <table class="table">
+                                    <tbody>
+                                {% for chapter in msg.history %}
+                                        <tr>
+                                            <td class="list-buttons-column">
+                                                <a class="icon" href="/admin/history/edit/?id={{ chapter.id }}&amp;url=%2Fadmin%2Fhistory%2F" title="Edit Record">
+                                                      <span class="fa fa-pencil glyphicon glyphicon-pencil"></span>
+                                                </a>
+                                            </td>
+                                            <td> {{ chapter.date }} </td><td> {{ chapter.chapter }} </td>
+                                        </tr>
+                                {% endfor %}
+                                    </tbody>
+                                </table>
+                                {% endif %}
+                                <div class="container col-md-6">
+                                    <form action="{{ url_for('feedback.index') }}" method="POST" accept-charset="utf-8">
+                                        {% for field in hform %}
+                                            <div class="form-group">
+                                                {% if field.type == "HiddenField" %}
+                                                {{ field(value=msg.id) }}
+                                                {% else %}
+                                                {{ field(class="form-control mb-2") }}
+                                                {% endif %}
+                                            </div>
+                                        {% endfor %}
+                                            <div class="form-group">
+                                                <input id="q" name="q" type="hidden" value="{% if q %}{{ q }}{% endif %}">
+                                                <input id="page" name="page" type="hidden" value="{{ pgs.page }}">
+                                            </div>
+                                        <button type="submit" value="send" class="btn btn-block btn-outline-primary rounded">Add</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            {% endfor %}
+                </tbody>
+            </table>
+            </div>
+            {{ pagination(pgs, q) }}
+{% endblock content %}

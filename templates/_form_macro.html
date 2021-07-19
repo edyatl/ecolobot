@@ -1,0 +1,13 @@
+{% macro divform(action, form) %}
+    <div class="container col-md-6">
+        <form action="{{ action }}" method="POST" accept-charset="utf-8">
+            {% for field in form %}
+                <div class="form-group">
+                    {{ field.label(class="control-label") }}
+                    {{ field(class="form-control mb-2", **kwargs) }}
+                </div>
+            {% endfor %}
+            <button type="submit" value="send" class="btn btn-block btn-outline-primary rounded">Add</button>
+        </form>
+    </div>
+{% endmacro %}

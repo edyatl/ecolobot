@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% from "security/_macros.html" import render_field_with_errors, render_field, render_field_errors %}
+
+{% block content_title %}
+<div class="container col-md-6">
+    {{ _fsdomain('Login') }}
+</div>
+{% endblock content_title %}
+{% block content %}
+{% include "security/_messages.html" %}
+<div class="container col-md-6">
+    <form action="{{ url_for_security('login') }}" method="POST" name="login_user_form">
+        {{ login_user_form.hidden_tag() }}
+        {{ render_field_with_errors(login_user_form.email, class="form-control mb-2") }}
+        {{ render_field_with_errors(login_user_form.password, class="form-control mb-2") }}
+        {{ render_field_with_errors(login_user_form.remember) }}
+        {{ render_field_errors(login_user_form.csrf_token) }}
+        {{ render_field(login_user_form.submit, class="btn btn-block btn-outline-primary rounded") }}
+    </form>
+{% include "security/_menu.html" %}
+</div>
+{% endblock %}

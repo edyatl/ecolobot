@@ -1,0 +1,43 @@
+{% block doc -%}
+<!DOCTYPE html>
+<html{% block html_attribs %}{% endblock html_attribs %}>
+  {%- block html %}
+  <head>
+    {%- block head %}
+    <title>{% block title %}{{ title|default('EcologradApp') }}{% endblock title %}</title>
+
+      {%- block metas %}
+        {% filter indent(width=8) %}{% include "_metas.html" %}{% endfilter %}
+      {%- endblock metas %}
+
+      {%- block styles %}
+        {% filter indent(width=8) %}{% include "_styles.html" %}{% endfilter %}
+      {%- endblock styles %}
+
+      {%- block favicon %}
+        {% filter indent(width=8) %}{% include "_favicon.html" %}{% endfilter %}
+      {%- endblock favicon %}
+
+    {%- endblock head %}
+  </head>
+  <body{% block body_attribs %}{% endblock body_attribs %}>
+    {% block body -%}
+      {% block navbar -%}
+        {%- include "_navbar.html" %}
+      {%- endblock navbar %}
+        <h1>
+            {%- block content_title -%}
+            {%- endblock content_title -%}
+        </h1>
+
+      {% block content -%}
+      {%- endblock content %}
+
+      {%- block scripts %}
+        {% filter indent(width=8) %}{% include "_scripts.html" %}{% endfilter %}
+      {%- endblock scripts %}
+    {%- endblock body %}
+  </body>
+  {%- endblock html %}
+</html>
+{% endblock doc -%}

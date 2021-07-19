@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% from "security/_macros.html" import render_field_with_errors, render_field %}
+
+{% block content_title -%}
+<div class="container col-md-6">
+    {{- _fsdomain('Register') -}}
+</div>
+{%- endblock content_title %}
+{% block content %}
+{% include "security/_messages.html" %}
+<div class="container col-md-6">
+    <form action="{{ url_for_security('register') }}" method="POST" name="register_user_form">
+      {{ register_user_form.hidden_tag() }}
+      {{ render_field_with_errors(register_user_form.email, class="form-control mb-2") }}
+      {{ render_field_with_errors(register_user_form.password, class="form-control mb-2") }}
+      {% if register_user_form.password_confirm %}
+        {{ render_field_with_errors(register_user_form.password_confirm, class="form-control mb-2") }}
+      {% endif %}
+      {{ render_field(register_user_form.submit, class="btn btn-block btn-outline-primary rounded") }}
+    </form>
+{% include "security/_menu.html" %}
+</div>
+{% endblock %}

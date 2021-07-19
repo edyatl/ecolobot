@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% from "_form_macro.html" import divform %}
+
+
+{% block title -%}
+    Create feedback message
+{%- endblock title %}
+
+
+{% block content_title -%}
+<div class="container col-md-6">
+    {{- 'Create feedback message' -}}
+</div>
+{%- endblock content_title %}
+
+
+{% block content %}
+    {{ divform(url_for('feedback.create_fb_msg'), form) | indent(4) }}
+{% endblock content %}

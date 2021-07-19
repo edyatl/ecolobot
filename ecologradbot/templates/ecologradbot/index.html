@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% from "_form_macro.html" import divform %}
+
+{% block title -%}
+    Ecologradbot module
+{%- endblock %}
+
+{% block content_title -%}
+<div class="container col-md-6">
+    {{- 'Ecologradbot webhook' -}}
+</div>
+{%- endblock content_title %}
+
+{% block content %}
+
+    {% if form %}
+        {{ divform(url_for('ecologradbot.index'), form, value=prps.get('url')) | indent(4) }}
+    {% endif %}
+
+    {% if prps %}
+        <div class="container col-md-6">
+            <table class="table table-hover">
+                <thead>
+                    <tr><th>property</th><th>value</th></tr>
+                </thead>
+                <tbody>
+                {% for p, v in prps.items() %}
+                    <tr><td>{{ p }}</td><td>{{ v }}</td></tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% endif %}
+
+{% endblock %}

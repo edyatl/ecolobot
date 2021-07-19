@@ -1,0 +1,28 @@
+{% macro pagination(pgs, q) %}
+            <nav>
+                <ul class="pagination justify-content-center">
+                        <li class="page-item{% if not pgs.has_prev %} disabled{% endif %}">
+                            <a class="page-link" href="./?page={{ pgs.prev_num  }}{% if q %}&q={{ q }}{% endif %}"{% if not pgs.has_prev %} tabindex="-1" aria-disabled="true"{% endif %} aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
+                    {% for pg in pgs.iter_pages() %}
+                    {% if pg %}
+                        <li class="page-item{% if pg == pgs.page %} active" aria-current="page{% endif %}">
+                            <a class="page-link" href="./?page={{ pg }}{% if q %}&q={{ q }}{% endif %}">{{ pg }}</a>
+                        </li>
+                    {% else %}
+                        <li class="page-item disabled">
+                            <a class="page-link" href="#" tabindex="-1" aria-disabled="true">...</a>
+                        </li>
+                    {% endif %}
+                    {% endfor %}
+                        <li class="page-item{% if not pgs.has_next %} disabled{% endif %}">
+                            <a class="page-link" href="./?page={{ pgs.next_num  }}{% if q %}&q={{ q }}{% endif %}"{% if not pgs.has_next %} tabindex="-1" aria-disabled="true"{% endif %} aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                </ul>
+            </nav>
+{% endmacro %}
+
