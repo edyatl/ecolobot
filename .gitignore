@@ -72,7 +72,7 @@ core*
 *.bak
 *.swp
 *.swo
-*.txt
+#*.txt
 *.log
 tags
 
