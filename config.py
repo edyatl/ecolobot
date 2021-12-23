@@ -9,7 +9,7 @@ if os.path.exists(project_dotenv):
     load_dotenv(project_dotenv)
 
 class Configuration(object):
-    DEBUG = True
+    DEBUG = False
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     SQLALCHEMY_DATABASE_URI = 'mysql+mysqlconnector://{0}:{1}@localhost/{2}'.format(
             env.get('ENV_DB_USER'), 
