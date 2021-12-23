@@ -5,7 +5,7 @@ from flask_security import auth_required, roles_accepted
 
 from models import Messages, Secrets, Members
 
-from app import db
+from app import db, app
 import requests
 import json
 import secrets, hashlib
@@ -68,6 +68,10 @@ non_msg_update = {
         'poll_answer',
         'unknown'
         }
+
+
+with app.app_context():
+    wh_token = current_app.config['WH_TOKEN']
 
 
 def _convert_markup(markup):
@@ -335,7 +339,7 @@ def index():
     return render_template('ecologradbot/index.html', prps=prps, form=form)
 
 
-@ecologradbot.route('/webhook/', methods=['POST', 'GET'])
+@ecologradbot.route('/webhook-{}/'.format(wh_token), methods=['POST', 'GET'])
 def webhook():
     """Rendering html of ecologradbot index
     :returns: rendered page of ecologradbot webhook

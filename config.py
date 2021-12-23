@@ -21,6 +21,7 @@ class Configuration(object):
     TG_TOKEN = env.get('ENV_TG_TOKEN')
     MESSAGES_MAIL_KEY = env.get('ENV_MESSAGES_MAIL_KEY')
     MESSAGES_PHONE_KEY = env.get('ENV_MESSAGES_PHONE_KEY')
+    WH_TOKEN = env.get('ENV_WH_TOKEN')
 
     # Flask-security-too
     SECURITY_PASSWORD_SALT = env.get('ENV_SECURITY_PASSWORD_SALT')
