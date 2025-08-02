@@ -124,6 +124,10 @@ def user_registered_sighandler(app, user, confirm_token, form_data):
 
 
 ### NavBar ###
+import collections
+import collections.abc
+if not hasattr(collections, 'MutableMapping'):
+    collections.MutableMapping = collections.abc.MutableMapping
 from flask_nav import Nav
 from flask_nav import register_renderer
 from flask_nav.elements import *
