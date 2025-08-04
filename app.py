@@ -124,6 +124,7 @@ def user_registered_sighandler(app, user, confirm_token, form_data):
 
 
 ### NavBar ###
+import view
 import collections
 import collections.abc
 if not hasattr(collections, 'MutableMapping'):
